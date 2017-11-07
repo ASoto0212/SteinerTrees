@@ -6,11 +6,11 @@ public class Vertex {
 
     private int id, distance;
     private Boolean visited;
-    private Map<Vertex, Integer> neighbors;
+    private Map<Integer, Integer> neighbors;
     private Vertex prev;
     
-    public Vertex(String name){
-        id = Integer.parseInt(name);
+    public Vertex(int name){
+        id = name;
         neighbors = new HashMap<>();
         visited = false;
         distance = Integer.MAX_VALUE;
@@ -22,7 +22,11 @@ public class Vertex {
     }
     
     public void add_neighbors(Vertex next, int weight){
-        this.neighbors.put(next, weight);
+        this.neighbors.put(next.id, weight);
+    }
+    
+    public Map<Integer, Integer> get_neighbors(){
+        return this.neighbors;
     }
     
     public int get_weight(Vertex neighbor){

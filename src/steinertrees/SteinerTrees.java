@@ -8,24 +8,28 @@ public class SteinerTrees {
         File test= new File("C:\\Users\\Alec\\Desktop\\B\\B\\b01.stp");
         System.out.println(test.canRead());
         Scanner scan = new Scanner(test);
-        String next;
-        int nodes, edges, terminals;
+        String getNext;
+        int nodes, edges, terminals, start, end, weight;
         while(scan.hasNextLine()){
-            next=scan.nextLine();
+            getNext=scan.nextLine();
             //System.out.println(next);
-            switch(next){
+            switch(getNext){
                 case "SECTION Graph":
                     System.out.println("AUSSIE AUSSIE AUSSIE");
                     scan.skip("Nodes ");
                     nodes=scan.nextInt();
                     scan.skip("\nEdges ");
                     edges=scan.nextInt();
-                    next=scan.nextLine();
-                    while(!next.equals("END")){
-                        System.out.println(next);
-                        next=scan.nextLine();
+                    getNext=scan.nextLine();
+                    for(int i=0; i<nodes; i++){
+                        String isE=scan.next();
+                        if (isE.equals("E "))
+                            scan.skip("E ");
+                        start=scan.nextInt();
+                        end=scan.nextInt();
+                        weight=scan.nextInt();
+                        System.out.println(start + end + weight);
                     }
-                    break;
             }
         }
     }

@@ -5,7 +5,7 @@ import java.util.*;
 public class SteinerTrees {
 
     public static void main(String[] args) throws FileNotFoundException {
-        File test= new File("C:\\Users\\Alec\\Desktop\\B\\B\\b01.stp");
+        File test= new File("U:\\My Documents\\NetBeansProjects\\SteinerTrees\\src\\steinertrees\\test1.txt");
         System.out.println(test.canRead());
         Scanner scan = new Scanner(test);
         String getNext;
@@ -18,8 +18,11 @@ public class SteinerTrees {
                     System.out.println("AUSSIE AUSSIE AUSSIE");
                     scan.skip("Nodes ");
                     nodes=scan.nextInt();
-                    scan.skip("\nEdges ");
+                    System.out.println(nodes);
+                    scan.nextLine();
+                    scan.skip("Edges ");
                     edges=scan.nextInt();
+                    System.out.println(edges);
                     getNext=scan.nextLine();
                     for(int i=0; i<nodes; i++){
                         String isE=scan.next();

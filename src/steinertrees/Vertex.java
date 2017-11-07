@@ -6,7 +6,7 @@ public class Vertex {
 
     private int id, distance;
     private Boolean visited;
-    private Map<Integer, Integer> neighbors;
+    private Map<Vertex, Integer> neighbors;
     private Vertex prev;
     
     public Vertex(int name){
@@ -22,10 +22,10 @@ public class Vertex {
     }
     
     public void add_neighbors(Vertex next, int weight){
-        this.neighbors.put(next.id, weight);
+        this.neighbors.put(next, weight);
     }
     
-    public Map<Integer, Integer> get_neighbors(){
+    public Map<Vertex, Integer> get_neighbors(){
         return this.neighbors;
     }
     
@@ -35,6 +35,10 @@ public class Vertex {
     
     public int get_distance(){
         return this.distance;
+    }
+    
+    public Vertex get_previous(){
+        return this.prev;
     }
     
     public void set_previous(Vertex previous){
@@ -49,4 +53,7 @@ public class Vertex {
         this.visited=true;
     }
     
+    public Boolean is_visited(){
+        return this.visited;
+    }
 }

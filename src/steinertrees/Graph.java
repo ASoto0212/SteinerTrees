@@ -16,6 +16,6 @@ public class Graph {
     public Graph(){
         Set<Vertex> nodes = new HashSet<Vertex>();
         Map<String, Vertex> vertices = new HashMap<String, Vertex>();
-        Map<String, String, int> distances = new HashMap<String, String, Vertex>();
+        Map<String, Integer> distances = new HashMap<>();
     }
 }

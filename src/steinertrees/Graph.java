@@ -62,9 +62,14 @@ public class Graph {
     
     public Stack<Vertex> Shortest_Distance(Vertex start, Vertex goal){
         Stack<Vertex> goalPath= new Stack<>();
-        Set<Integer> minTree = this.node_set();
+        Set<Integer> minTree = new HashSet<>();
         Vertex current=start;
         current.set_distance(0);
+        while(minTree.size()<=this.nodes.size()){
+            for(Map.Entry<Vertex, Integer> next : current.get_neighbors().entrySet()){
+                
+            }
+        }
         /*while(!unvisited.isEmpty()){
             if(current.is_visited()){
                 for(Vertex next : current.get_neighbors().keySet()){

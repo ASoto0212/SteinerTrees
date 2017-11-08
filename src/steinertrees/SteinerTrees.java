@@ -5,7 +5,7 @@ import java.util.*;
 public class SteinerTrees {
 
     public static void main(String[] args) throws FileNotFoundException {
-        File test= new File("U:\\My Documents\\NetBeansProjects\\SteinerTrees\\src\\steinertrees\\test1.txt");
+        File test= new File("C:\\Users\\Alec\\Desktop\\COT 4521-Computational Geometry\\Steiners\\SteinerTrees\\src\\steinertrees\\test1.txt2");
         System.out.println(test.canRead());
         Scanner scan = new Scanner(test);
         String getNext;

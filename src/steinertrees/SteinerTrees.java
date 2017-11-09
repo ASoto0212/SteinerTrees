@@ -13,7 +13,6 @@ public class SteinerTrees {
         int nodes, edges, terminals, start, end, weight;
         while(scan.hasNextLine()){
             getNext=scan.nextLine();
-            //System.out.println(next);
             switch(getNext){
                 case "SECTION Graph":
                     scan.skip("Nodes ");
@@ -22,6 +21,7 @@ public class SteinerTrees {
                     scan.skip("Edges ");
                     edges=scan.nextInt();
                     getNext=scan.nextLine();
+                    graph.set_id(edges);
                     for(int i=0; i<edges; i++){
                         String isE=scan.next();
                         if (isE.equals("E "))
@@ -36,13 +36,5 @@ public class SteinerTrees {
                     break;
             }
         }
-        Scanner inputs= new Scanner(System.in);
-        int startv, endv;
-        System.out.println("Enter start");
-        startv=inputs.nextInt();
-        System.out.println("Enter end");
-        endv=inputs.nextInt();
-        graph.Shortest_Distance(graph.get_node(startv), graph.get_node(endv));
     }
-    
 }

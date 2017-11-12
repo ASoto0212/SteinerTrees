@@ -10,6 +10,7 @@ public class SteinerTrees {
         Scanner scan = new Scanner(test);
         String getNext;
         Graph graph= new Graph();
+        Set<Integer> term = new HashSet<>();
         int nodes, edges, terminals, start, end, weight;
         while(scan.hasNextLine()){
             getNext=scan.nextLine();
@@ -21,7 +22,8 @@ public class SteinerTrees {
                     scan.skip("Edges ");
                     edges=scan.nextInt();
                     getNext=scan.nextLine();
-                    graph.set_id(edges);
+                    graph.set_edges(edges);
+                    graph.set_nodes(nodes);
                     for(int i=0; i<edges; i++){
                         String isE=scan.next();
                         if (isE.equals("E "))
@@ -34,6 +36,17 @@ public class SteinerTrees {
                         graph.add_edge(start, end, weight);
                     }
                     break;
+                case "SECTION Terminals":
+                    scan.skip("Terminals ");
+                    terminals=scan.nextInt();
+                    scan.nextLine();
+                    for(int i=0; i<terminals; i++){
+                        String isT=scan.next();
+                        if (isT.equals("T "))
+                            scan.skip("T ");
+                        term.add(scan.nextInt());
+                    }
+                    
             }
         }
     }

@@ -10,20 +10,16 @@ import java.util.*;
 public class Graph {
     
     private Set<Integer> nodes;
-//    private Map<Integer, Vertex> vertices;
     public List<Edge> edges;
-    public int size;
+    public int numEdges, numNodes;
     public Graph(){
         nodes = new HashSet<>();
-//        vertices = new HashMap<>();
         edges = new ArrayList<>();
     }
     
     public void add_node(int newNode){
         if(!this.nodes.contains(newNode)){
-//            Vertex newVertex = new Vertex(newNode);
             this.nodes.add(newNode);
-//            this.vertices.put(newNode, newVertex);
         }
     }
     
@@ -32,66 +28,15 @@ public class Graph {
             this.add_node(start);
         if(!this.nodes.contains(end))
             this.add_node(end);
-//        this.vertices.get(start).add_neighbors(vertices.get(end), weight);
-//        this.vertices.get(end).add_neighbors(vertices.get(start), weight);
         this.edges.add(new Edge(start, end, weight));
-        //System.out.println("Start: " + start + " End: " + end + " Weight: " + weight);
     }
     
-/*    public Vertex get_node(int vertex){
-        if(this.nodes.contains(vertex))
-            return this.vertices.get(vertex);
-        else{
-            return null;
-        }
-    }
-
-    public Map<Integer, Vertex> get_nodes(){
-        return this.vertices;
+    public void set_edges(int e){
+        this.numEdges=e;
     }
     
-    public Set<Integer> node_set(){
-        return this.nodes;
-    }
-*/    
-    public int find(int root[], int i){
-        if(root[i]==-1){
-            return i;
-        }
-        return find(root, root[i]);
-    }
-    
-    public void join(int root[], int x, int y){
-        int xset=find(root, x);
-        int yset=find(root, y);
-        root[xset]=yset;
-    }
-    
-/*    public int get_distance(Vertex start, Vertex end){
-        return start.get_distance() + end.get_distance();
-    }
-*/    
-    public void set_id(int edgeNum){
-        this.size=edgeNum;
-    }
-    
-    public boolean is_cycle(Graph g){
-        int root[]= new int [g.size];
-        
-        for(int i=0; i<g.size; i++){
-            root[i]=-1;     
-        }
-        
-        for(int i=0; i<g.edges.size(); i++){
-            int x=g.find(root, g.edges.get(i).get_start());
-            int y=g.find(root, g.edges.get(i).get_end());
-            
-            if(x==y){
-                return true;
-            }
-            g.join(root, x, y);
-        }
-        return false;
+    public void set_nodes(int n){
+        this.numNodes=n;
     }
     
     public Queue<Edge> MST(){
@@ -102,16 +47,39 @@ public class Graph {
         goalPath.add(current);
         mst.add_node(current.get_start());
         mst.add_node(current.get_end());
-        //current.set_distance(0);
         while(mst.nodes.size()<=this.nodes.size()){
             this.edges.remove(0);
             current=this.edges.get(0);
             mst.add_edge(current.get_start(), current.get_end(), current.get_weight());
-            if(!is_cycle(mst))
-                goalPath.add(current);
+            goalPath.add(current);
         }
         return goalPath;
     }
 
+    //union and find are not my code.
+    //just me testing if kruskals algorithm works for what we want to do
+    //source: http://www.geeksforgeeks.org/greedy-algorithms-set-2-kruskals-minimum-spanning-tree-mst/   
+    class subset{
+        int parent, rank;
+    };
+    
+    int find(subset subsets[], int i){
+        if(subsets[i].parent != i)
+            subsets[i].parent=find(subsets, subsets[i].parent);
+        return subsets[i].parent;
+    }
+    
+    void Union(subset subsets[], int x, int y){
+        int xroot=find(subsets,x);
+        int yroot=find(subsets,y);
+        
+        if(subsets[xroot].rank<subsets[yroot].rank)
+            subsets[xroot].parent=yroot;
+        else if(subsets[xroot].rank>subsets[yroot].rank)
+            subsets[yroot].parent=xroot;
+        else{
+            subsets[yroot].parent=xroot;
+            subsets[xroot].rank++;
+        }
+    }
 }
-

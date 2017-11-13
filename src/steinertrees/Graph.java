@@ -43,15 +43,15 @@ public class Graph {
         Collections.sort(this.edges, Comparator.comparingInt(Edge :: get_weight));
         Edge goalPath[]=new Edge[this.numNodes];
         Graph mst=new Graph();
-        int e=0,i=1;
-        for(int j=1;j<this.numNodes;j++){
+        int e=0,i=0;
+        for(int j=0;j<this.numNodes;j++){
             goalPath[j]=new Edge();
         }
-        subset subsets[]=new subset[this.numNodes+1];
-        for(int j=1;j<=this.numNodes;j++){
+        subset subsets[]=new subset[this.numNodes];
+        for(int j=0;j<this.numNodes;j++){
             subsets[j]=new subset();
         }
-        for(int v=1;v<=this.numNodes;v++){
+        for(int v=0;v<this.numNodes;v++){
             subsets[v].parent=v;
             subsets[v].rank=0;
         }
@@ -67,16 +67,16 @@ public class Graph {
             }
         }
         System.out.println(goalPath.length);
-        for(int j=0;j<goalPath.length;j++){
-            System.out.println(goalPath[j].get_start()+
-                                "--"+goalPath[j].get_end()+
-                                "=="+goalPath[j].get_weight());
+        for(int j=0;j<goalPath.length-1;j++){
+            System.out.println("Edge:" + j + " " +
+                                goalPath[j].get_start()+
+                                "<-->"+goalPath[j].get_end()+
+                                "   Weight="+goalPath[j].get_weight());
         }
         return goalPath;
     }
 
     //union and find are not my code.
-    //just me testing if kruskals algorithm works for what we want to do
     //source: http://www.geeksforgeeks.org/greedy-algorithms-set-2-kruskals-minimum-spanning-tree-mst/   
     class subset{
         int parent, rank;

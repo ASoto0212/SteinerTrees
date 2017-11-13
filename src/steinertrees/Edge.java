@@ -9,6 +9,10 @@ public class Edge {
         this.v2=end;
         this.weight=w;
     }
+
+    public Edge(){
+        
+    }
     
     public int get_start(){
         return this.v1;

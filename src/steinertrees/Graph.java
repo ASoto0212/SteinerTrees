@@ -39,19 +39,38 @@ public class Graph {
         this.numNodes=n;
     }
     
-    public Queue<Edge> MST(){
+    public Edge[] MST(){
         Collections.sort(this.edges, Comparator.comparingInt(Edge :: get_weight));
-        Queue<Edge> goalPath=new LinkedList<>();
+        Edge goalPath[]=new Edge[this.numNodes];
         Graph mst=new Graph();
-        Edge current=this.edges.get(0);
-        goalPath.add(current);
-        mst.add_node(current.get_start());
-        mst.add_node(current.get_end());
-        while(mst.nodes.size()<=this.nodes.size()){
-            this.edges.remove(0);
-            current=this.edges.get(0);
-            mst.add_edge(current.get_start(), current.get_end(), current.get_weight());
-            goalPath.add(current);
+        int e=0,i=1;
+        for(int j=1;j<this.numNodes;j++){
+            goalPath[j]=new Edge();
+        }
+        subset subsets[]=new subset[this.numNodes+1];
+        for(int j=1;j<=this.numNodes;j++){
+            subsets[j]=new subset();
+        }
+        for(int v=1;v<=this.numNodes;v++){
+            subsets[v].parent=v;
+            subsets[v].rank=0;
+        }
+        while(e<this.numNodes-1){
+            Edge next=new Edge();
+            next=this.edges.get(i++);
+            int x=find(subsets, next.get_start());
+            int y=find(subsets, next.get_end());
+            
+            if(x!=y){
+                goalPath[e++]=next;
+                Union(subsets,x,y);
+            }
+        }
+        System.out.println(goalPath.length);
+        for(int j=0;j<goalPath.length;j++){
+            System.out.println(goalPath[j].get_start()+
+                                "--"+goalPath[j].get_end()+
+                                "=="+goalPath[j].get_weight());
         }
         return goalPath;
     }

@@ -49,5 +49,12 @@ public class SteinerTrees {
                     
             }
         }
+        System.out.println(graph.edges.size());
+        for(int i=0;i<graph.numEdges;i++){
+            System.out.println("Start: " + graph.edges.get(i).get_start() + 
+                                " End: " + graph.edges.get(i).get_end() + 
+                                " Weight: " + graph.edges.get(i).get_weight());
+        }
+        graph.MST();
     }
 }

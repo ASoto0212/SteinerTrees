@@ -5,9 +5,13 @@ public class Edge {
     private int weight, v1, v2;
 
     public Edge(int start, int end, int w){
-        this.v1=start;
-        this.v2=end;
+        this.v1=start-1;
+        this.v2=end-1;
         this.weight=w;
+    }
+
+    public Edge(){
+        
     }
     
     public int get_start(){

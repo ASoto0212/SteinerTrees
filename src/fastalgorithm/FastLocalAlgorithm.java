@@ -8,11 +8,15 @@ package fastalgorithm;
 import edu.uci.ics.jung.algorithms.layout.*;
 import edu.uci.ics.jung.graph.*;
 import edu.uci.ics.jung.visualization.*;
+import edu.uci.ics.jung.visualization.control.CrossoverScalingControl;
+import edu.uci.ics.jung.visualization.control.ScalingControl;
 import edu.uci.ics.jung.visualization.decorators.EdgeShape;
 import edu.uci.ics.jung.visualization.decorators.ToStringLabeller;
 import static fastalgorithm.ShortestPath.V;
 import org.apache.commons.collections15.Transformer;
 import java.awt.*;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.geom.Ellipse2D;
 import java.io.*;
 import java.util.*;
@@ -38,7 +42,7 @@ public class FastLocalAlgorithm {
         }
         String getNext;
         EdgeWeightedGraph graph = null;
-        int nodes, edges, terminal, terminals, start, end, weight;
+        int nodes, edges, terminal, terminals, start, end, weight, buf;
         while(scan.hasNextLine()){
             getNext=scan.nextLine();
             //System.out.println(getNext);
@@ -53,7 +57,7 @@ public class FastLocalAlgorithm {
                     scan.nextLine();
                     //graph = set_id(edges);
                     for(int i=0; i<edges; i++){
-                        String isE=scan.next();
+                        String isE=scan.next();/*
                         if (isE.equals("E "))
                             scan.skip("E ");
                         start=scan.nextInt()-1;
@@ -63,21 +67,22 @@ public class FastLocalAlgorithm {
                         //graph.add_node(end);
                         Edge e = new Edge(start, end, weight);
                         graph.addEdge(e);
-                        /*}
-                        else if (isE.equals("A")){
+                        }*/
+                        if (isE.equals("A")){
                             //scan.skip("A");
                             start=scan.nextInt()-1;
                             end=scan.nextInt()-1;
                             weight=scan.nextInt();
-                            System.out.println(start);
-                            System.out.println(end);
-                            System.out.println(weight);
+                            buf=scan.nextInt(); 
+                            //System.out.println(start);
+                            //System.out.println(end);
+                            //System.out.println(weight);
                             System.out.println(String.format("Reading A %d %d %d",start,end,weight));
                             //graph.add_node(start);
                             //graph.add_node(end);
                             Edge e = new Edge(start, end, weight);
                             graph.addEdge(e);
-                        }*/
+                        }
                     }
                     break;
                 case "SECTION Terminals":
@@ -103,8 +108,8 @@ public class FastLocalAlgorithm {
     }
     
     public static void main(String [] args) {
-        //String inputfile = "src/steinertrees/gene61f.txt";
-        String inputfile = "src/fastalgorithm/test1.txt";
+        String inputfile = "src/fastalgorithm/gene61f.txt";
+        //String inputfile = "src/fastalgorithm/test1.txt";
         EdgeWeightedGraph G = parseSteinerData(inputfile);
         //System.out.println(G.size());
         //System.out.println(G.E());
@@ -208,8 +213,8 @@ public class FastLocalAlgorithm {
         
         Layout<Integer, Integer> layout = new KKLayout(mst);
    
-        BasicVisualizationServer<Integer, Integer> vs = new BasicVisualizationServer<Integer, Integer>(layout);
-        vs.setPreferredSize(new Dimension(700,700));
+        VisualizationViewer<Integer, Integer> vs = new VisualizationViewer<Integer, Integer>(layout);
+        vs.setPreferredSize(new Dimension(800,800));
         
         vs.getRenderContext().setVertexLabelTransformer(new ToStringLabeller());
         
@@ -221,10 +226,12 @@ public class FastLocalAlgorithm {
                 return Color.RED;
             }
         };
-        
+        double amount = 1.0;    // Or negative to zoom out.
+        ScalingControl scaler = new CrossoverScalingControl();
         vs.getRenderContext().setVertexDrawPaintTransformer(vertexColor);
         vs.getRenderContext().setEdgeShapeTransformer(new EdgeShape.Line<Integer,Integer>());
-        
+        vs.scaleToLayout(scaler);
+        scaler.scale(vs, amount > 0 ? 1.2f : 1 / 1.1f, vs.getCenter());
         JFrame frame = new JFrame();
         frame.getContentPane().add(vs);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
